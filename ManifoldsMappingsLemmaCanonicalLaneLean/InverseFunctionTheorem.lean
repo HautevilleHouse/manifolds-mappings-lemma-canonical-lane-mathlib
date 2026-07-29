@@ -1,29 +1,40 @@
-import canonicalLaneMathlib.ImmersionSubmersionFoundations
+import ManifoldsMappingsLemmaCanonicalLaneLean.SmoothMappingsPackage
+
+/-!
+# Inverse Function Theorem Package
+-/
 
 namespace HautevilleHouse
 namespace ManifoldsMappingsLemmaCanonicalLaneLean
 
-structure InverseFunctionPackage where
-  source : Type u
-  target : Type v
-  sourceSmooth : Prop
-  targetSmooth : Prop
-  derivativeInvertibleAtPoint : Prop
-  localDiffeomorphism : Prop
-  derivativeInvertibleClosed : derivativeInvertibleAtPoint
-  localDiffeomorphismClosed : localDiffeomorphism
+structure InverseFunctionTheoremPackage {G : RiemannianCurvaturePackage}
+    {M : MathlibObjects.MappingEndgameState}
+    (S : SmoothMappingsPackage M) where
+  derivativeInvertible : Prop
+  localInverseExists : Prop
+  localInverseSmooth : Prop
 
-structure InverseFunctionEvidence (P : InverseFunctionPackage) where
-  derivativeInvertibleClosed : P.derivativeInvertibleAtPoint
-  localDiffeomorphismClosed : P.localDiffeomorphism
+structure InverseFunctionTheoremEvidence {G : RiemannianCurvaturePackage}
+    {M : MathlibObjects.MappingEndgameState}
+    {S : SmoothMappingsPackage M}
+    (I : InverseFunctionTheoremPackage S) where
+  derivativeInvertibleClosed : I.derivativeInvertible
+  localInverseExistsClosed : I.localInverseExists
+  localInverseSmoothClosed : I.localInverseSmooth
 
-def InverseFunctionClosed (P : InverseFunctionPackage) : Prop :=
-  P.derivativeInvertibleAtPoint ∧ P.localDiffeomorphism
+def InverseFunctionTheoremClosed {G : RiemannianCurvaturePackage}
+    {M : MathlibObjects.MappingEndgameState}
+    {S : SmoothMappingsPackage M}
+    (I : InverseFunctionTheoremPackage S) : Prop :=
+  I.derivativeInvertible ∧ I.localInverseExists ∧ I.localInverseSmooth
 
-theorem inverse_function_closed_from_evidence
-    (P : InverseFunctionPackage) (E : InverseFunctionEvidence P) :
-    InverseFunctionClosed P := by
-  exact And.intro E.derivativeInvertibleClosed E.localDiffeomorphismClosed
+theorem inverse_function_theorem_closed_from_evidence
+    {G : RiemannianCurvaturePackage} {M : MathlibObjects.MappingEndgameState}
+    {S : SmoothMappingsPackage M}
+    (I : InverseFunctionTheoremPackage S) (E : InverseFunctionTheoremEvidence I) :
+    InverseFunctionTheoremClosed I := by
+  exact And.intro E.derivativeInvertibleClosed
+    (And.intro E.localInverseExistsClosed E.localInverseSmoothClosed)
 
 end ManifoldsMappingsLemmaCanonicalLaneLean
 end HautevilleHouse
