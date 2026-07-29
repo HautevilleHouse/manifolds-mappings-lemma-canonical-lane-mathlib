@@ -1,4 +1,4 @@
-import canonicalLaneMathlib.AdmissibleClass
+import canonicalLaneMathlib.BridgeLemmas
 
 namespace HautevilleHouse
 namespace ManifoldsMappingsLemmaCanonicalLaneLean
