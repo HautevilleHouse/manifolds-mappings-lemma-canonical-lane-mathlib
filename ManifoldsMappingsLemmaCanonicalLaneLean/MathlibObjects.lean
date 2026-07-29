@@ -1,5 +1,4 @@
-import ManifoldsMappingsLemmaCanonicalLaneLean.TheoremStatement
-import CanonicalLaneMathlibCore
+import canonicalLaneMathlib.AdmissibleClass
 import Mathlib.Topology.Basic
 
 namespace HautevilleHouse
@@ -12,18 +11,19 @@ structure MappingsSpace where
   topology : TopologicalSpace carrier
 
 structure MappingsAdmittedObject where
-  space : MappingsSpace
-  sourceManifold : Type
-  targetManifold : Type
-  mapping : sourceManifold → targetManifold
-  smoothMapping : Prop
-  conclusion : smoothMapping
+  source : MappingsSpace
+  target : MappingsSpace
+  mapping : source.carrier → target.carrier
+  smooth : Prop
+  differentialInjective : Prop
+  differentialSurjective : Prop
+  conclusion : smooth ∧ differentialInjective ∧ differentialSurjective
 
 structure MappingsEndgameState where
   object : MappingsAdmittedObject
 
 def MappingsWitnessClosed (O : MappingsAdmittedObject) : Prop :=
-  O.smoothMapping
+  O.smooth ∧ O.differentialInjective ∧ O.differentialSurjective
 
 end ManifoldsMappingsLemmaCanonicalLaneLean
 end HautevilleHouse

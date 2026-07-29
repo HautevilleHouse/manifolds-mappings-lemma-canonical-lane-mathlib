@@ -1,13 +1,12 @@
-import canonicalLaneMathlib.AdmissibleClass
-import HautevilleHouse.ManifoldsMappingsLemmaCanonicalLaneLean.Projection
+import HautevilleHouse.ManifoldsMappingsLemmaCanonicalLaneLean.AdmissibleClass
 
 namespace HautevilleHouse
 namespace ManifoldsMappingsLemmaCanonicalLaneLean
 
-def bridgeClosed (A : ManifoldMappingAdmissibleClass) : Prop :=
-  A.object.conclusion
+def bridgeClosed (A : AdmissibleClass) : Prop :=
+  MappingsWitnessClosed A.object
 
-theorem bridge_from_admissible_class (A : ManifoldMappingAdmissibleClass) :
+theorem bridge_from_admissible_class (A : AdmissibleClass) :
     bridgeClosed A := by
   exact A.object.conclusion
 
