@@ -1,40 +1,31 @@
-import ManifoldsMappingsLemmaCanonicalLaneLean.SmoothMappingsPackage
-
-/-!
-# Inverse Function Theorem Package
--/
+import HautevilleHouse.ManifoldsMappingsLemmaCanonicalLaneLean.GateLemmas
 
 namespace HautevilleHouse
 namespace ManifoldsMappingsLemmaCanonicalLaneLean
 
-structure InverseFunctionTheoremPackage {G : RiemannianCurvaturePackage}
-    {M : MathlibObjects.MappingEndgameState}
-    (S : SmoothMappingsPackage M) where
+structure InverseFunctionPackage where
+  sourceManifold : Type u
+  targetManifold : Type v
+  sourceTopology : TopologicalSpace sourceManifold
+  targetTopology : TopologicalSpace targetManifold
+  mapping : sourceManifold → targetManifold
+  point : sourceManifold
   derivativeInvertible : Prop
   localInverseExists : Prop
-  localInverseSmooth : Prop
+  inverseSmoothness : Prop
 
-structure InverseFunctionTheoremEvidence {G : RiemannianCurvaturePackage}
-    {M : MathlibObjects.MappingEndgameState}
-    {S : SmoothMappingsPackage M}
-    (I : InverseFunctionTheoremPackage S) where
-  derivativeInvertibleClosed : I.derivativeInvertible
-  localInverseExistsClosed : I.localInverseExists
-  localInverseSmoothClosed : I.localInverseSmooth
+structure InverseFunctionEvidence (P : InverseFunctionPackage) where
+  derivativeInvertibleClosed : P.derivativeInvertible
+  localInverseExistsClosed : P.localInverseExists
+  inverseSmoothnessClosed : P.inverseSmoothness
 
-def InverseFunctionTheoremClosed {G : RiemannianCurvaturePackage}
-    {M : MathlibObjects.MappingEndgameState}
-    {S : SmoothMappingsPackage M}
-    (I : InverseFunctionTheoremPackage S) : Prop :=
-  I.derivativeInvertible ∧ I.localInverseExists ∧ I.localInverseSmooth
+def InverseFunctionClosed (P : InverseFunctionPackage) : Prop :=
+  P.derivativeInvertible ∧ P.localInverseExists ∧ P.inverseSmoothness
 
-theorem inverse_function_theorem_closed_from_evidence
-    {G : RiemannianCurvaturePackage} {M : MathlibObjects.MappingEndgameState}
-    {S : SmoothMappingsPackage M}
-    (I : InverseFunctionTheoremPackage S) (E : InverseFunctionTheoremEvidence I) :
-    InverseFunctionTheoremClosed I := by
+theorem inverse_function_closed_from_evidence (P : InverseFunctionPackage)
+    (E : InverseFunctionEvidence P) : InverseFunctionClosed P := by
   exact And.intro E.derivativeInvertibleClosed
-    (And.intro E.localInverseExistsClosed E.localInverseSmoothClosed)
+    (And.intro E.localInverseExistsClosed E.inverseSmoothnessClosed)
 
 end ManifoldsMappingsLemmaCanonicalLaneLean
 end HautevilleHouse

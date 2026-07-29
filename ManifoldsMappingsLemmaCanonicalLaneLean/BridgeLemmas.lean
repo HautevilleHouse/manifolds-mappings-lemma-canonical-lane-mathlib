@@ -1,10 +1,10 @@
-import HautevilleHouse.ManifoldsMappingsLemmaCanonicalLaneLean.AdmissibleClass
+import HautevilleHouse.ManifoldsMappingsLemmaCanonicalLaneLean.MappingAdmissibleClass
 
 namespace HautevilleHouse
 namespace ManifoldsMappingsLemmaCanonicalLaneLean
 
 def bridgeClosed (A : AdmissibleClass) : Prop :=
-  MappingsWitnessClosed A.object
+  A.object.conclusion
 
 theorem bridge_from_admissible_class (A : AdmissibleClass) :
     bridgeClosed A := by
