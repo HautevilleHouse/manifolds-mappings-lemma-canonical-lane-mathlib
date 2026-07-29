@@ -1,16 +1,16 @@
-import ManifoldsMappingsLemmaCanonicalLaneLean.MathlibObjects
+import canonicalLaneMathlib.AdmissibleClass
 
 namespace HautevilleHouse
 namespace ManifoldsMappingsLemmaCanonicalLaneLean
 
 structure AdmissibleClass where
-  object : AdmittedObject
+  object : MappingsAdmittedObject
   endpointSatisfied : Prop
   remainderRecorded : Prop
   gateWitness : endpointSatisfied ∨ remainderRecorded
 
 def admittedClosure (A : AdmissibleClass) : Prop :=
-  MappingWitnessClosed A.object ∧ (A.endpointSatisfied ∨ A.remainderRecorded)
+  MappingsWitnessClosed A.object ∧ (A.endpointSatisfied ∨ A.remainderRecorded)
 
 end ManifoldsMappingsLemmaCanonicalLaneLean
 end HautevilleHouse

@@ -3,11 +3,11 @@ import ManifoldsMappingsLemmaCanonicalLaneLean.GateLemmas
 namespace HautevilleHouse
 namespace ManifoldsMappingsLemmaCanonicalLaneLean
 
-def ConstrainedMappingClosure (A : AdmissibleClass) : Prop :=
+def ConstrainedMappingsClosure (A : AdmissibleClass) : Prop :=
   bridgeClosed A ∧ gateClosed A
 
-theorem constrained_mapping_endgame (A : AdmissibleClass) :
-    ConstrainedMappingClosure A := by
+theorem constrained_mappings_endgame (A : AdmissibleClass) :
+    ConstrainedMappingsClosure A := by
   exact And.intro (bridge_from_admissible_class A) (gate_from_admissible_class A)
 
 end ManifoldsMappingsLemmaCanonicalLaneLean

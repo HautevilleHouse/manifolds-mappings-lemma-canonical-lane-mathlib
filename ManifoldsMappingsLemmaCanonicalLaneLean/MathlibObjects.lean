@@ -7,23 +7,23 @@ namespace ManifoldsMappingsLemmaCanonicalLaneLean
 
 open HautevilleHouse.CanonicalLaneMathlibCore
 
-structure ManifoldSpace where
+structure MappingsSpace where
   carrier : Type
   topology : TopologicalSpace carrier
 
-structure AdmittedObject where
-  source : ManifoldSpace
-  target : ManifoldSpace
-  mapping : carrier source → carrier target
+structure MappingsAdmittedObject where
+  space : MappingsSpace
+  sourceManifold : Type
+  targetManifold : Type
+  mapping : sourceManifold → targetManifold
   smoothMapping : Prop
-  localDiffeomorphism : Prop
-  conclusion : smoothMapping ∧ localDiffeomorphism
+  conclusion : smoothMapping
 
-structure MappingEndgameState where
-  object : AdmittedObject
+structure MappingsEndgameState where
+  object : MappingsAdmittedObject
 
-def MappingWitnessClosed (O : AdmittedObject) : Prop :=
-  O.smoothMapping ∧ O.localDiffeomorphism
+def MappingsWitnessClosed (O : MappingsAdmittedObject) : Prop :=
+  O.smoothMapping
 
 end ManifoldsMappingsLemmaCanonicalLaneLean
 end HautevilleHouse

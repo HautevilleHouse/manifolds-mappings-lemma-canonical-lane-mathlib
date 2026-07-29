@@ -1,31 +1,40 @@
-import canonicalLaneMathlib.ConstantRankTheorem
+import ManifoldsMappingsLemmaCanonicalLaneLean.ImmersionSubmersion
+
+/-!
+# Transversality Package
+-/
 
 namespace HautevilleHouse
 namespace ManifoldsMappingsLemmaCanonicalLaneLean
 
-structure TransversalityPackage where
-  source : Type u
-  target : Type v
-  submanifold : Type w
-  sourceSmooth : Prop
-  targetSmooth : Prop
-  submanifoldEmbedded : Prop
+structure TransversalityPackage {M : MappingsStructurePackage}
+    {I : ImmersionSubmersionPackage M} where
   transversalCondition : Prop
-  intersectionSubmanifold : Prop
-  transversalConditionClosed : transversalCondition
-  intersectionSubmanifoldClosed : intersectionSubmanifold
+  preimageSubmanifold : Prop
+  dimensionFormula : Prop
+  stabilityUnderPerturbation : Prop
 
-structure TransversalityEvidence (P : TransversalityPackage) where
-  transversalConditionClosed : P.transversalCondition
-  intersectionSubmanifoldClosed : P.intersectionSubmanifold
+structure TransversalityEvidence {M : MappingsStructurePackage}
+    {I : ImmersionSubmersionPackage M}
+    (T : TransversalityPackage M I) where
+  transversalConditionClosed : T.transversalCondition
+  preimageSubmanifoldClosed : T.preimageSubmanifold
+  dimensionFormulaClosed : T.dimensionFormula
+  stabilityUnderPerturbationClosed : T.stabilityUnderPerturbation
 
-def TransversalityClosed (P : TransversalityPackage) : Prop :=
-  P.transversalCondition ∧ P.intersectionSubmanifold
+def TransversalityClosed {M : MappingsStructurePackage}
+    {I : ImmersionSubmersionPackage M}
+    (T : TransversalityPackage M I) : Prop :=
+  T.transversalCondition ∧ T.preimageSubmanifold ∧
+  T.dimensionFormula ∧ T.stabilityUnderPerturbation
 
 theorem transversality_closed_from_evidence
-    (P : TransversalityPackage) (E : TransversalityEvidence P) :
-    TransversalityClosed P := by
-  exact And.intro E.transversalConditionClosed E.intersectionSubmanifoldClosed
+    {M : MappingsStructurePackage} {I : ImmersionSubmersionPackage M}
+    (T : TransversalityPackage M I) (E : TransversalityEvidence T) :
+    TransversalityClosed T := by
+  exact And.intro E.transversalConditionClosed
+    (And.intro E.preimageSubmanifoldClosed
+      (And.intro E.dimensionFormulaClosed E.stabilityUnderPerturbationClosed))
 
 end ManifoldsMappingsLemmaCanonicalLaneLean
 end HautevilleHouse
